@@ -1,0 +1,32 @@
+{
+  "name": "isi-dev-1-product-api",
+  "version": "1.0.0",
+  "description": "Desafio Fiepe/Senai dev1",
+  "main": "server.ts",
+  "scripts": {
+    "dev": "tsx watch ./src/server.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fernandosantoshs/isi-dev-1-product-api.git"
+  },
+  "author": "Fernando Santos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fernandosantoshs/isi-dev-1-product-api/issues"
+  },
+  "homepage": "https://github.com/fernandosantoshs/isi-dev-1-product-api#readme",
+  "devDependencies": {
+    "@rocketseat/eslint-config": "2.2.2",
+    "@types/node": "24.0.3",
+    "eslint": "9.29.0",
+    "tsx": "4.20.3",
+    "typescript": "5.8.3"
+  },
+  "dependencies": {
+    "dotenv": "16.5.0",
+    "fastify": "5.4.0",
+    "zod": "3.25.67"
+  }
+}
