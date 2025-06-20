@@ -1,4 +1,3 @@
-import { prisma } from '@/lib/prisma';
 import { ProductsRepository } from '@/repositories/products-repository';
 import { Product } from '@prisma/client';
 
@@ -22,14 +21,22 @@ export class CreateProductUseCase {
     price,
     stock,
   }: CreateProductUseCaseRequest): Promise<CreateProductUseCaseResponse> {
-    const product = await prisma.product.create({
-      data: {
-        name,
-        description,
-        price,
-        stock,
-      },
+    const product = await this.productsRepository.create({
+      name,
+      description,
+      price,
+      stock,
     });
+
+    // TODO : move this code to prisma product repository when created
+    // const product = await prisma.product.create({
+    // data: {
+    //   name,
+    //   description,
+    //   price,
+    //   stock,
+    // },
+    // });
 
     return { product };
   }
