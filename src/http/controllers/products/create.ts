@@ -15,9 +15,9 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
   );
 
   try {
-    const createProductUseCase = await makeCreateProductUseCase();
+    const createProductUseCase = makeCreateProductUseCase();
 
-    createProductUseCase.execute({
+    await createProductUseCase.execute({
       name,
       description,
       price,
