@@ -1,5 +1,4 @@
-import { InMemoryProductsRepository } from '@/repositories/in-memory/in-memory-products-repository';
-import { CreateProductUseCase } from '@/use-cases/create-product';
+import { makeCreateProductUseCase } from '@/factories/make-create-product-use-case';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import z from 'zod';
 
@@ -15,12 +14,10 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
     request.body
   );
 
-  const productsRepository = new InMemoryProductsRepository();
-
-  const createProductUseCase = new CreateProductUseCase(productsRepository);
-
   try {
-    await createProductUseCase.execute({
+    const createProductUseCase = await makeCreateProductUseCase();
+
+    createProductUseCase.execute({
       name,
       description,
       price,
