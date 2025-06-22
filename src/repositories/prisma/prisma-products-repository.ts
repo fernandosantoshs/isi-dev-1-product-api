@@ -31,6 +31,8 @@ export class PrismaProductsRepository implements ProductsRepository {
 
     const where: Prisma.ProductWhereInput = {};
 
+    const orderBy = { [sortBy]: sortOrder };
+
     if (search) {
       where.OR = [
         { name: { contains: search, mode: 'insensitive' } },
@@ -46,7 +48,7 @@ export class PrismaProductsRepository implements ProductsRepository {
       where.price = { lte: maxPrice };
     }
 
-    const products = await prisma.product.findMany({ where });
+    const products = await prisma.product.findMany({ where, orderBy });
 
     return products;
   }
