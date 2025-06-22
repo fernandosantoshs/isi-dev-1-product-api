@@ -4,10 +4,14 @@ import z from 'zod';
 
 export async function create(request: FastifyRequest, reply: FastifyReply) {
   const createProductBodySchema = z.object({
-    name: z.string(),
+    name: z
+      .string()
+      .min(3)
+      .max(100)
+      .regex(/^[a-zA-Z0-9\s\-_,.]+$`/),
     description: z.string().optional(),
     price: z.coerce.number().min(0.1),
-    stock: z.coerce.number(),
+    stock: z.coerce.number().min(0),
   });
 
   const { name, description, price, stock } = createProductBodySchema.parse(

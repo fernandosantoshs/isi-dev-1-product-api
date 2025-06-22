@@ -3,11 +3,17 @@ import { ProductsRepository } from '../products-repository';
 import { Decimal } from '@prisma/client/runtime/library';
 
 export class InMemoryProductsRepository implements ProductsRepository {
-  public products: Product[] = [];
+  public items: Product[] = [];
+
+  async findManyProducts() {
+    const products = this.items;
+
+    return products;
+  }
 
   async create(data: Prisma.ProductCreateInput) {
     const product = {
-      id: this.products.length + 1,
+      id: this.items.length + 1,
       name: data.name,
       description: data.description ?? null,
       price: new Decimal(data.price.toString()),
@@ -17,7 +23,7 @@ export class InMemoryProductsRepository implements ProductsRepository {
       deleted_at: null,
     };
 
-    this.products.push(product);
+    this.items.push(product);
 
     return product;
   }
