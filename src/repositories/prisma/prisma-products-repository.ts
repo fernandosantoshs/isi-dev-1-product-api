@@ -48,6 +48,14 @@ export class PrismaProductsRepository implements ProductsRepository {
       where.price = { lte: maxPrice };
     }
 
+    if (hasDiscount) {
+      where.Product_coupon_applications = { some: {} };
+    }
+
+    if (!includeDeleted) {
+      where.deleted_at = null;
+    }
+
     const products = await prisma.product.findMany({ where, orderBy });
 
     return products;

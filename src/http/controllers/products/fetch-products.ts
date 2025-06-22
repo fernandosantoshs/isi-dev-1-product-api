@@ -13,12 +13,12 @@ export async function fetchProducts(
     search: z.string().optional(),
     minPrice: z.coerce.number().min(0.01).max(1000000).optional(),
     maxPrice: z.coerce.number().min(0.01).max(1000000).optional(),
-    hasDiscount: z.boolean().optional(),
+    hasDiscount: z.coerce.boolean().optional(),
     sortBy: z.enum(['name', 'price', 'created_at', 'stock']).default('name'),
     sortOrder: z.enum(['asc', 'desc']).default('asc'),
-    includeDeleted: z.boolean().optional(),
-    onlyOutOfStock: z.boolean().optional(),
-    withCouponApplied: z.boolean().optional(),
+    includeDeleted: z.coerce.boolean().optional(),
+    onlyOutOfStock: z.coerce.boolean().optional(),
+    withCouponApplied: z.coerce.boolean().optional(),
   });
 
   const queryParams = fetchProductsQueryParams.parse(request.query);
@@ -27,7 +27,7 @@ export async function fetchProducts(
     const fetchProductsUseCase = makeFetchProductsUseCase();
     const products = await fetchProductsUseCase.execute(queryParams);
 
-    return reply.status(200).send(products);
+    return reply.status(200).send({ products });
   } catch (error) {
     return reply.status(500).send({ error: 'Failed to fetch products' });
   }
