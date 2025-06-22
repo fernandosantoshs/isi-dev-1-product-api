@@ -60,7 +60,12 @@ export class PrismaProductsRepository implements ProductsRepository {
       where.stock = { equals: 0 };
     }
 
-    const products = await prisma.product.findMany({ where, orderBy });
+    const products = await prisma.product.findMany({
+      where,
+      orderBy,
+      skip: page - 1,
+      take: limit,
+    });
 
     return products;
   }
