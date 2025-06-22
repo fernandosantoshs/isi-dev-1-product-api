@@ -56,6 +56,10 @@ export class PrismaProductsRepository implements ProductsRepository {
       where.deleted_at = null;
     }
 
+    if (onlyOutOfStock) {
+      where.stock = { equals: 0 };
+    }
+
     const products = await prisma.product.findMany({ where, orderBy });
 
     return products;
