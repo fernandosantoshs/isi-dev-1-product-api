@@ -38,6 +38,14 @@ export class PrismaProductsRepository implements ProductsRepository {
       ];
     }
 
+    if (minPrice) {
+      where.price = { gte: minPrice };
+    }
+
+    if (maxPrice) {
+      where.price = { lte: maxPrice };
+    }
+
     const products = await prisma.product.findMany({ where });
 
     return products;

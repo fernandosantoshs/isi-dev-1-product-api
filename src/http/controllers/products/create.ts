@@ -8,8 +8,13 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
       .string()
       .min(3)
       .max(100)
-      .regex(/^[a-zA-Z0-9\s\-_,.]+$`/),
-    description: z.string().optional(),
+      .regex(/^[\p{L}0-9\s\-_,.]+$/u, 'Invalid name')
+      .trim(),
+    description: z
+      .string()
+      .regex(/^[\p{L}0-9\s\-_,.]+$/u, 'Invalid description')
+      .trim()
+      .optional(),
     price: z.coerce.number().min(0.1),
     stock: z.coerce.number().min(0),
   });
@@ -21,15 +26,17 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
   try {
     const createProductUseCase = makeCreateProductUseCase();
 
-    await createProductUseCase.execute({
+    const { product } = await createProductUseCase.execute({
       name,
       description,
       price,
       stock,
     });
+
+    const locationHeader = `/products/${product.id}`;
+
+    return reply.status(201).header('Location', locationHeader).send();
   } catch (error) {
     throw error;
   }
-
-  return reply.status(201).send();
 }

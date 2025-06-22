@@ -28,16 +28,6 @@ export class CreateProductUseCase {
       stock,
     });
 
-    // TODO : move this code to prisma product repository when created
-    // const product = await prisma.product.create({
-    // data: {
-    //   name,
-    //   description,
-    //   price,
-    //   stock,
-    // },
-    // });
-
     return { product };
   }
 }

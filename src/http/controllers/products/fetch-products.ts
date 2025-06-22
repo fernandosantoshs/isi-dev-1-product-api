@@ -7,23 +7,23 @@ export async function fetchProducts(
   request: FastifyRequest,
   reply: FastifyReply
 ) {
+  const fetchProductsQueryParams = z.object({
+    page: z.coerce.number().min(1).default(1),
+    limit: z.coerce.number().min(1).max(50).default(20),
+    search: z.string().optional(),
+    minPrice: z.coerce.number().min(0.01).max(1000000).optional(),
+    maxPrice: z.coerce.number().min(0.01).max(1000000).optional(),
+    hasDiscount: z.boolean().optional(),
+    sortBy: z.enum(['name', 'price', 'created_at', 'stock']).default('name'),
+    sortOrder: z.enum(['asc', 'desc']).default('asc'),
+    includeDeleted: z.boolean().optional(),
+    onlyOutOfStock: z.boolean().optional(),
+    withCouponApplied: z.boolean().optional(),
+  });
+
+  const queryParams = fetchProductsQueryParams.parse(request.query);
+
   try {
-    const fetchProductsQueryParams = z.object({
-      page: z.coerce.number().min(1).default(1),
-      limit: z.coerce.number().min(1).max(50).default(20),
-      search: z.string().optional(),
-      minPrice: z.coerce.number().min(0.01).max(1000000).default(0.01),
-      maxPrice: z.coerce.number().min(0.01).max(1000000).default(0.01),
-      hasDiscount: z.boolean().default(false),
-      sortBy: z.enum(['name', 'price', 'created_at', 'stock']).default('name'),
-      sortOrder: z.enum(['asc', 'desc']).default('asc'),
-      includeDeleted: z.boolean().default(false),
-      onlyOutOfStock: z.boolean().default(false),
-      withCouponApplied: z.boolean().default(false),
-    });
-
-    const queryParams = fetchProductsQueryParams.parse(request.query);
-
     const fetchProductsUseCase = makeFetchProductsUseCase();
     const products = await fetchProductsUseCase.execute(queryParams);
 
