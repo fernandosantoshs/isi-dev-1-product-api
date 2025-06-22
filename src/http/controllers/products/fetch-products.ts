@@ -29,7 +29,6 @@ export async function fetchProducts(
 
     return reply.status(200).send(products);
   } catch (error) {
-    console.log(error);
-    return reply.send(500).send({ error: 'Failed to fetch products' });
+    return reply.status(500).send({ error: 'Failed to fetch products' });
   }
 }
