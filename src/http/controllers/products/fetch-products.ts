@@ -27,7 +27,13 @@ export async function fetchProducts(
     const fetchProductsUseCase = makeFetchProductsUseCase();
     const { products } = await fetchProductsUseCase.execute(queryParams);
 
-    return reply.status(200).send({ data: products });
+    const normalizedProducts = products.map(
+      ({ normalized_name, deleted_at, ...rest }) => {
+        return rest;
+      }
+    );
+
+    return reply.status(200).send({ data: normalizedProducts });
   } catch (error) {
     return reply.status(500).send({ error: 'Failed to fetch products' });
   }
