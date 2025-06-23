@@ -9,7 +9,7 @@ export class PrismaProductsRepository implements ProductsRepository {
   async findProductByName(name: string) {
     const product = await prisma.product.findFirst({
       where: {
-        name: {
+        normalized_name: {
           equals: name,
           mode: 'insensitive',
         },
