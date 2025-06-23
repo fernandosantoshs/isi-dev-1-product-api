@@ -6,6 +6,14 @@ import {
 import { prisma } from '@/lib/prisma';
 
 export class PrismaProductsRepository implements ProductsRepository {
+  async findProductById(productId: number) {
+    const product = await prisma.product.findUnique({
+      where: { id: productId },
+    });
+
+    return product;
+  }
+
   async findProductByName(name: string) {
     const product = await prisma.product.findFirst({
       where: {
