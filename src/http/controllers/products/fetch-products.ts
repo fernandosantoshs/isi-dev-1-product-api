@@ -9,7 +9,7 @@ export async function fetchProducts(
 ) {
   const fetchProductsQueryParams = z.object({
     page: z.coerce.number().min(1).default(1),
-    limit: z.coerce.number().min(1).max(50).default(20),
+    limit: z.coerce.number().min(1).max(50).default(10),
     search: z.string().optional(),
     minPrice: z.coerce.number().min(0.01).max(1000000).optional(),
     maxPrice: z.coerce.number().min(0.01).max(1000000).optional(),

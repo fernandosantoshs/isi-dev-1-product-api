@@ -1,7 +1,6 @@
 import { ProductsRepository } from '@/repositories/products-repository';
 import { normalizeString } from '@/utils/normalize-string';
 import { Product } from '@prisma/client';
-import { error } from 'console';
 
 interface CreateProductUseCaseRequest {
   name: string;
