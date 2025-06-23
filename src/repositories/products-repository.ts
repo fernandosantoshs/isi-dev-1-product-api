@@ -19,4 +19,5 @@ export interface ProductsRepository {
   findManyProducts(filters: FetchProductsFilters): Promise<Product[]>;
   findProductByName(name: string): Promise<Product | null>;
   findProductById(id: number): Promise<Product | null>;
+  updateProduct(id: number, data: Prisma.ProductUpdateInput): Promise<Product>;
 }

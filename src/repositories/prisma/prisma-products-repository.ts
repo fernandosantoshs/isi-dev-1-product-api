@@ -35,6 +35,15 @@ export class PrismaProductsRepository implements ProductsRepository {
     return product;
   }
 
+  updateProduct(id: number, data: Prisma.ProductUpdateInput): Promise<Product> {
+    const updatedProduct = prisma.product.update({
+      where: { id },
+      data,
+    });
+
+    return updatedProduct;
+  }
+
   async findManyProducts(filters: FetchProductsFilters): Promise<Product[]> {
     const {
       page,
