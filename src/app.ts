@@ -6,7 +6,7 @@ export const app = fastify();
 app.addContentTypeParser(
   'application/json-patch+json',
   { parseAs: 'buffer' },
-  function (request, payload, done) {
+  function (_request, payload, done) {
     try {
       const json = JSON.parse(payload.toString());
       done(null, json);
