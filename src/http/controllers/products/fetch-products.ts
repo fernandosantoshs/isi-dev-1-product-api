@@ -25,9 +25,9 @@ export async function fetchProducts(
 
   try {
     const fetchProductsUseCase = makeFetchProductsUseCase();
-    const products = await fetchProductsUseCase.execute(queryParams);
+    const { products } = await fetchProductsUseCase.execute(queryParams);
 
-    return reply.status(200).send({ products });
+    return reply.status(200).send({ data: products });
   } catch (error) {
     return reply.status(500).send({ error: 'Failed to fetch products' });
   }

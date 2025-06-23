@@ -8,11 +8,11 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
       .string()
       .min(3)
       .max(100)
-      .regex(/^[\p{L}0-9\s\-_,.]+$/u, 'Invalid name')
+      .regex(/^[\p{L}0-9\s\-_,.%]+$/u, 'Invalid name')
       .trim(),
     description: z
       .string()
-      .regex(/^[\p{L}0-9\s\-_,.]+$/u, 'Invalid description')
+      .regex(/^[\p{L}0-9\s\-_,.%&*]+$/u, 'Invalid description')
       .trim()
       .optional(),
     price: z.coerce.number().min(0.1),
