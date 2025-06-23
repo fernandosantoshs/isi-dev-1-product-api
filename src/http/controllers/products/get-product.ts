@@ -15,7 +15,11 @@ export async function getProduct(request: FastifyRequest, reply: FastifyReply) {
 
     const { product } = await getProductUseCase.execute(id);
 
-    return reply.status(200).send(product);
+    return reply.status(200).send({
+      ...product,
+      normalized_name: undefined,
+      deleted_at: undefined,
+    });
   } catch (error) {
     throw error;
   }
