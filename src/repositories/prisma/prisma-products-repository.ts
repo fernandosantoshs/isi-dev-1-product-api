@@ -6,6 +6,19 @@ import {
 import { prisma } from '@/lib/prisma';
 
 export class PrismaProductsRepository implements ProductsRepository {
+  async findProductByName(name: string) {
+    const product = await prisma.product.findFirst({
+      where: {
+        name: {
+          equals: name,
+          mode: 'insensitive',
+        },
+      },
+    });
+
+    return product;
+  }
+
   async create(data: Prisma.ProductCreateInput): Promise<Product> {
     const product = await prisma.product.create({
       data,

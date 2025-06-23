@@ -17,4 +17,5 @@ export interface FetchProductsFilters {
 export interface ProductsRepository {
   create(data: Prisma.ProductCreateInput): Promise<Product>;
   findManyProducts(filters: FetchProductsFilters): Promise<Product[]>;
+  findProductByName(name: string): Promise<Product | null>;
 }

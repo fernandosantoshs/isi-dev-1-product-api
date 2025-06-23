@@ -1,5 +1,6 @@
 import { ProductsRepository } from '@/repositories/products-repository';
 import { Product } from '@prisma/client';
+import { error } from 'console';
 
 interface CreateProductUseCaseRequest {
   name: string;
@@ -21,6 +22,13 @@ export class CreateProductUseCase {
     price,
     stock,
   }: CreateProductUseCaseRequest): Promise<CreateProductUseCaseResponse> {
+    const productAlreadyRegistered =
+      await this.productsRepository.findProductByName(name);
+
+    if (productAlreadyRegistered) {
+      throw new Error('Product already exists');
+    }
+
     const product = await this.productsRepository.create({
       name,
       description,
