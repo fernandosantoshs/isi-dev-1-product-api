@@ -6,6 +6,15 @@ import {
 import { prisma } from '@/lib/prisma';
 
 export class PrismaProductsRepository implements ProductsRepository {
+  restoreProduct(productId: number) {
+    const restoredProduct = prisma.product.update({
+      where: { id: productId },
+      data: { deleted_at: null, updated_at: new Date() },
+    });
+
+    return restoredProduct;
+  }
+
   deleteProduct(productId: number) {
     const deletedProduct = prisma.product.update({
       where: { id: productId },

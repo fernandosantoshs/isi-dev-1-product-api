@@ -29,7 +29,7 @@ export class UpdateProductUseCase {
       throw new Error('Product not found');
     }
 
-    let updatedData: Partial<Product> = { ...product };
+    let updatedData: Partial<Product> = { ...product, updated_at: new Date() };
 
     for (const operation of operations) {
       if (operation.op === 'replace') {

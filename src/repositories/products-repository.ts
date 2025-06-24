@@ -21,4 +21,5 @@ export interface ProductsRepository {
   findProductById(id: number): Promise<Product | null>;
   updateProduct(id: number, data: Prisma.ProductUpdateInput): Promise<Product>;
   deleteProduct(id: number): Promise<Product | null>;
+  restoreProduct(id: number): Promise<Product | null>;
 }
