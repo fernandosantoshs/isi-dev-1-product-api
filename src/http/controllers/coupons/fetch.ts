@@ -12,6 +12,6 @@ export async function fetchCoupons(
 
     return reply.status(200).send(coupons);
   } catch (error) {
-    return reply.status(500).send({ error: 'Failed to fetch products' });
+    return reply.status(500).send({ error: 'Failed to fetch coupons' });
   }
 }

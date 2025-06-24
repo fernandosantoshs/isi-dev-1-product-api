@@ -38,8 +38,6 @@ export class CreateCouponUseCase {
       throw new Error('Coupon already exists');
     }
 
-    console.log(valid_from.getFullYear(), valid_until);
-
     const validFromPlus5Years = new Date(valid_from);
     validFromPlus5Years.setFullYear(validFromPlus5Years.getFullYear() + 5);
 
