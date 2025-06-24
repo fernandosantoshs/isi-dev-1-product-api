@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import z from 'zod';
 
-import { makeGetProductUseCase } from '@/factories/make-get-products-use-case';
+import { makeGetProductUseCase } from '@/factories/product/make-get-products-use-case';
 
 export async function getProduct(request: FastifyRequest, reply: FastifyReply) {
   const getProductQueryParams = z.object({

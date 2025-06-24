@@ -1,4 +1,4 @@
-import { makeDeleteProductUseCase } from '@/factories/make-delete-product-use-case';
+import { makeDeleteProductUseCase } from '@/factories/product/make-delete-product-use-case';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import z from 'zod';
 

@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { z } from 'zod';
 
-import { makeFetchProductsUseCase } from '@/factories/make-fetch-products-use-case';
+import { makeFetchProductsUseCase } from '@/factories/product/make-fetch-products-use-case';
 
 export async function fetchProducts(
   request: FastifyRequest,
