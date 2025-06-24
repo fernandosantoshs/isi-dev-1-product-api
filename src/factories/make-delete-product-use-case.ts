@@ -1,5 +1,5 @@
 import { PrismaProductsRepository } from '@/repositories/prisma/prisma-products-repository';
-import { DeleteProductUseCase } from '@/use-cases/delete-product';
+import { DeleteProductUseCase } from '@/use-cases/product/delete-product';
 
 export function makeDeleteProductUseCase() {
   const productsRepository = new PrismaProductsRepository();
