@@ -11,6 +11,19 @@ export class PrismaCouponsRepository implements CouponsRepository {
     return coupon;
   }
 
+  async deleteCoupon(code: string) {
+    const coupon = await prisma.coupon.update({
+      where: {
+        code,
+      },
+      data: {
+        deleted_at: new Date(),
+      },
+    });
+
+    return coupon;
+  }
+
   async findCouponById(couponId: number) {
     const coupon = await prisma.coupon.findFirst({
       where: { id: couponId },

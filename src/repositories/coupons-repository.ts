@@ -5,4 +5,5 @@ export interface CouponsRepository {
   findCouponByCode(code: string): Promise<Coupon | null>;
   findManyCoupons(): Promise<Coupon[]>;
   findCouponById(id: number): Promise<Coupon | null>;
+  deleteCoupon(code: string): Promise<Coupon | null>;
 }
