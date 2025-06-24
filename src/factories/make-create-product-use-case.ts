@@ -1,5 +1,5 @@
 import { PrismaProductsRepository } from '@/repositories/prisma/prisma-products-repository';
-import { CreateProductUseCase } from '@/use-cases/product/create-product';
+import { CreateProductUseCase } from '@/use-cases/product/create';
 
 export function makeCreateProductUseCase() {
   const productsRepository = new PrismaProductsRepository();

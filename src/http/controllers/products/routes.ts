@@ -1,10 +1,10 @@
 import { FastifyInstance } from 'fastify';
 import { create } from './create';
-import { fetchProducts } from './fetch-products';
-import { getProduct } from './get-product';
-import { updateProduct } from './update-product';
-import { deleteProduct } from './delete-product';
-import { restoreProduct } from './restore-product';
+import { fetchProducts } from './fetch';
+import { getProduct } from './get';
+import { updateProduct } from './update';
+import { deleteProduct } from './delete';
+import { restoreProduct } from './restore';
 
 export async function productsRoutes(app: FastifyInstance) {
   app.post('/products', create);

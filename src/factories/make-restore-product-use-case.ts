@@ -1,6 +1,6 @@
 import { PrismaProductsRepository } from '@/repositories/prisma/prisma-products-repository';
 
-import { RestoreProductUseCase } from '@/use-cases/product/restore-product';
+import { RestoreProductUseCase } from '@/use-cases/product/restore';
 
 export function makeRestoreProductUseCase() {
   const productsRepository = new PrismaProductsRepository();
