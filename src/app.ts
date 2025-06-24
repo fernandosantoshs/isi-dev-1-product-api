@@ -1,5 +1,6 @@
 import fastify from 'fastify';
 import { productsRoutes } from './http/controllers/products/routes';
+import { couponsRoutes } from './http/controllers/coupons/routes';
 
 export const app = fastify();
 
@@ -17,4 +18,7 @@ app.addContentTypeParser(
   }
 );
 
-app.register(productsRoutes, { prefix: '/api/v1' });
+const apiPrefix = { prefix: '/api/v1' };
+
+app.register(productsRoutes, apiPrefix);
+app.register(couponsRoutes, apiPrefix);
