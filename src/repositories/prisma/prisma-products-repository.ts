@@ -6,6 +6,15 @@ import {
 import { prisma } from '@/lib/prisma';
 
 export class PrismaProductsRepository implements ProductsRepository {
+  deleteProduct(productId: number) {
+    const deletedProduct = prisma.product.update({
+      where: { id: productId },
+      data: { deleted_at: new Date() },
+    });
+
+    return deletedProduct;
+  }
+
   async findProductById(productId: number) {
     const product = await prisma.product.findUnique({
       where: { id: productId },
