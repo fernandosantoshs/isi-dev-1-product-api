@@ -6,4 +6,5 @@ export interface CouponsRepository {
   findManyCoupons(): Promise<Coupon[]>;
   findCouponById(id: number): Promise<Coupon | null>;
   deleteCoupon(code: string): Promise<Coupon | null>;
+  updateCoupon(code: string, data: Prisma.CouponUpdateInput): Promise<Coupon>;
 }

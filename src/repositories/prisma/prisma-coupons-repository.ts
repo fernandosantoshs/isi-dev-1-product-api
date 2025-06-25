@@ -52,4 +52,15 @@ export class PrismaCouponsRepository implements CouponsRepository {
 
     return coupons;
   }
+
+  async updateCoupon(code: string, data: Prisma.CouponUpdateInput) {
+    const coupon = await prisma.coupon.update({
+      where: {
+        code,
+      },
+      data,
+    });
+
+    return coupon;
+  }
 }
