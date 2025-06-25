@@ -20,6 +20,17 @@ export class PrismaProductsRepository implements ProductsRepository {
     return coupon;
   }
 
+  async removeCouponFromProduct(
+    productId: number,
+    data: Prisma.Product_coupon_applicationsUpdateInput
+  ): Promise<Product_coupon_applications> {
+    const coupon = await prisma.product_coupon_applications.update({
+      where: { id: productId },
+      data,
+    });
+    return coupon;
+  }
+
   restoreProduct(productId: number) {
     const restoredProduct = prisma.product.update({
       where: { id: productId },
@@ -36,6 +47,17 @@ export class PrismaProductsRepository implements ProductsRepository {
     });
 
     return deletedProduct;
+  }
+
+  async findProducWithActiveCoupon(productId: number) {
+    const activeCoupon = await prisma.product_coupon_applications.findFirst({
+      where: {
+        product_id: productId,
+        removed_at: null,
+      },
+    });
+
+    return activeCoupon;
   }
 
   async findProductById(productId: number) {

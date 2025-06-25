@@ -19,11 +19,18 @@ export interface ProductsRepository {
   findManyProducts(filters: FetchProductsFilters): Promise<Product[]>;
   findProductByName(name: string): Promise<Product | null>;
   findProductById(id: number): Promise<Product | null>;
+  findProducWithActiveCoupon(
+    id: number
+  ): Promise<Product_coupon_applications | null>;
   updateProduct(id: number, data: Prisma.ProductUpdateInput): Promise<Product>;
   deleteProduct(id: number): Promise<Product | null>;
   restoreProduct(id: number): Promise<Product | null>;
   applyCouponToProduct(
     id: number,
     couponId: number
+  ): Promise<Product_coupon_applications>;
+  removeCouponFromProduct(
+    id: number,
+    data: Prisma.Product_coupon_applicationsUpdateInput
   ): Promise<Product_coupon_applications>;
 }

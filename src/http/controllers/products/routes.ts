@@ -6,6 +6,7 @@ import { updateProduct } from './update';
 import { deleteProduct } from './delete';
 import { restoreProduct } from './restore';
 import { applyCoupon } from './apply-coupon';
+import { removeCoupon } from './remove-coupon';
 
 export async function productsRoutes(app: FastifyInstance) {
   app.post('/products', create);
@@ -18,4 +19,5 @@ export async function productsRoutes(app: FastifyInstance) {
   app.patch('/products/:id', updateProduct);
 
   app.delete('/products/:id', deleteProduct);
+  app.delete('/products/:id/discount', removeCoupon);
 }
