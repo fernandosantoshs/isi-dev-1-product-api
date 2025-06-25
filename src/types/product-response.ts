@@ -1,3 +1,5 @@
+import { Coupon, Product } from '@prisma/client';
+
 export interface Discount {
   type: string;
   value: number;
@@ -6,7 +8,7 @@ export interface Discount {
 export interface GetProductUseCaseRequest {
   id: number;
 }
-export interface GetProductUseCaseResponse {
+export interface ProductUseCaseResponse {
   id: number;
   name: string;
   description?: string;
@@ -19,3 +21,9 @@ export interface GetProductUseCaseResponse {
   created_at: Date;
   updated_at?: Date;
 }
+
+export type ProductWithCoupons = Product & {
+  Product_coupon_applications: {
+    coupon: Coupon;
+  }[];
+};

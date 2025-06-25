@@ -2,12 +2,12 @@ import {
   FetchProductsFilters,
   ProductsRepository,
 } from '@/repositories/products-repository';
-import { GetProductUseCaseResponse } from '@/types/product-response';
-import { normalizeProductResponse } from '@/utils/normalize-product-response';
+import { ProductUseCaseResponse } from '@/types/product-response';
+import { validateCoupon } from '@/utils/validate-coupon';
 
 type FetchProductsUseCaseRequest = FetchProductsFilters;
 
-type FetchProductsUseCaseResponse = GetProductUseCaseResponse[];
+type FetchProductsUseCaseResponse = ProductUseCaseResponse[];
 
 export class FetchProductsUseCase {
   constructor(private productsRepository: ProductsRepository) {}
@@ -18,7 +18,7 @@ export class FetchProductsUseCase {
     const products = await this.productsRepository.findManyProducts(filters);
 
     const normalizedProducts = products.map((product) => {
-      return normalizeProductResponse(product);
+      return validateCoupon(product);
     });
 
     return normalizedProducts;

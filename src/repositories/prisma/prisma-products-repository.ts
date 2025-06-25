@@ -1,4 +1,4 @@
-import { Prisma, Product } from '@prisma/client';
+import { Prisma, Product, Product_coupon_applications } from '@prisma/client';
 import {
   FetchProductsFilters,
   ProductsRepository,
@@ -6,6 +6,20 @@ import {
 import { prisma } from '@/lib/prisma';
 
 export class PrismaProductsRepository implements ProductsRepository {
+  async applyCouponToProduct(
+    productId: number,
+    couponId: number
+  ): Promise<Product_coupon_applications> {
+    const coupon = await prisma.product_coupon_applications.create({
+      data: {
+        product_id: productId,
+        coupon_id: couponId,
+      },
+    });
+
+    return coupon;
+  }
+
   restoreProduct(productId: number) {
     const restoredProduct = prisma.product.update({
       where: { id: productId },

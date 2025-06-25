@@ -5,9 +5,7 @@ type ProductWithCoupons = Product & {
   Product_coupon_applications?: { coupon: Coupon }[];
 };
 
-export function normalizeProductResponse(
-  productWithCoupon: ProductWithCoupons
-) {
+export function validateCoupon(productWithCoupon: ProductWithCoupons) {
   const MIN_PRICE = 0.01;
 
   const couponApplication = productWithCoupon.Product_coupon_applications?.[0];

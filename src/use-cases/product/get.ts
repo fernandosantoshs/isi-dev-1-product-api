@@ -1,23 +1,17 @@
 import { ProductsRepository } from '@/repositories/products-repository';
 import {
   GetProductUseCaseRequest,
-  GetProductUseCaseResponse,
+  ProductUseCaseResponse,
+  ProductWithCoupons,
 } from '@/types/product-response';
-import { normalizeProductResponse } from '@/utils/normalize-product-response';
-import { Coupon, Product } from '@prisma/client';
-
-export type ProductWithCoupons = Product & {
-  Product_coupon_applications: {
-    coupon: Coupon;
-  }[];
-};
+import { validateCoupon } from '@/utils/validate-coupon';
 
 export class GetProductUseCase {
   constructor(private productsRepository: ProductsRepository) {}
 
   async execute({
     id,
-  }: GetProductUseCaseRequest): Promise<GetProductUseCaseResponse> {
+  }: GetProductUseCaseRequest): Promise<ProductUseCaseResponse> {
     const productWithCoupon = (await this.productsRepository.findProductById(
       id
     )) as ProductWithCoupons;
@@ -26,7 +20,7 @@ export class GetProductUseCase {
       throw new Error('Product not found');
     }
 
-    const normalizedProduct = normalizeProductResponse(productWithCoupon);
+    const normalizedProduct = validateCoupon(productWithCoupon);
 
     return normalizedProduct;
   }

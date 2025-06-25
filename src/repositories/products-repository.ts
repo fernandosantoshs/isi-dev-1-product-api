@@ -1,4 +1,4 @@
-import { Prisma, Product } from '@prisma/client';
+import { Prisma, Product, Product_coupon_applications } from '@prisma/client';
 
 export interface FetchProductsFilters {
   page: number;
@@ -22,4 +22,8 @@ export interface ProductsRepository {
   updateProduct(id: number, data: Prisma.ProductUpdateInput): Promise<Product>;
   deleteProduct(id: number): Promise<Product | null>;
   restoreProduct(id: number): Promise<Product | null>;
+  applyCouponToProduct(
+    id: number,
+    couponId: number
+  ): Promise<Product_coupon_applications>;
 }
