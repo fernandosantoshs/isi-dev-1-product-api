@@ -13,7 +13,7 @@ export async function getProduct(request: FastifyRequest, reply: FastifyReply) {
   try {
     const getProductUseCase = makeGetProductUseCase();
 
-    const { product } = await getProductUseCase.execute(id);
+    const product = await getProductUseCase.execute({ id });
 
     return reply.status(200).send({
       ...product,

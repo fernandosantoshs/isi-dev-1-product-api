@@ -27,10 +27,41 @@ export class PrismaProductsRepository implements ProductsRepository {
   async findProductById(productId: number) {
     const product = await prisma.product.findUnique({
       where: { id: productId },
+      include: {
+        Product_coupon_applications: {
+          where: {
+            coupon: {
+              deleted_at: null,
+              valid_until: {
+                gte: new Date(),
+              },
+            },
+          },
+          include: {
+            coupon: true,
+          },
+        },
+      },
     });
 
     return product;
   }
+
+  // async findProductByIdWithActiveCoupon(productId: number) {
+  //   const product = await prisma.product_coupon_applications.findFirst({
+  //     where: {
+  //       product_id: productId,
+  //       coupon: {
+  //         deleted_at: null,
+  //       },
+  //     },
+  //     include: {
+  //       product: true,
+  //     },
+  //   });
+
+  //   return { product };
+  // }
 
   async findProductByName(name: string) {
     const product = await prisma.product.findFirst({
