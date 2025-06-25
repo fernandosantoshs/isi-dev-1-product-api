@@ -66,6 +66,7 @@ export class PrismaProductsRepository implements ProductsRepository {
       include: {
         Product_coupon_applications: {
           where: {
+            removed_at: null,
             coupon: {
               deleted_at: null,
               valid_until: {
