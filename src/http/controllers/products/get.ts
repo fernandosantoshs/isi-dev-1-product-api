@@ -13,12 +13,16 @@ export async function getProduct(request: FastifyRequest, reply: FastifyReply) {
   try {
     const getProductUseCase = makeGetProductUseCase();
 
-    const product = await getProductUseCase.execute({ id });
+    const normalizedProduct = await getProductUseCase.execute({ id });
 
     return reply.status(200).send({
-      ...product,
-      normalized_name: undefined,
-      deleted_at: undefined,
+      data: [normalizedProduct],
+      meta: {
+        page: 1,
+        limit: 1,
+        totalItems: 1,
+        totalPages: 1,
+      },
     });
   } catch (error) {
     throw error;

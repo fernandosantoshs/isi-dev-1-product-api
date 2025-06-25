@@ -2,12 +2,12 @@ import {
   FetchProductsFilters,
   ProductsRepository,
 } from '@/repositories/products-repository';
-import { Product } from '@prisma/client';
+import { GetProductUseCaseResponse } from '@/types/product-response';
+import { normalizeProductResponse } from '@/utils/normalize-product-response';
 
 type FetchProductsUseCaseRequest = FetchProductsFilters;
-interface FetchProductsUseCaseResponse {
-  products: Product[];
-}
+
+type FetchProductsUseCaseResponse = GetProductUseCaseResponse[];
 
 export class FetchProductsUseCase {
   constructor(private productsRepository: ProductsRepository) {}
@@ -17,6 +17,10 @@ export class FetchProductsUseCase {
   ): Promise<FetchProductsUseCaseResponse> {
     const products = await this.productsRepository.findManyProducts(filters);
 
-    return { products };
+    const normalizedProducts = products.map((product) => {
+      return normalizeProductResponse(product);
+    });
+
+    return normalizedProducts;
   }
 }

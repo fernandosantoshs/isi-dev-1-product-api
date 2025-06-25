@@ -47,22 +47,6 @@ export class PrismaProductsRepository implements ProductsRepository {
     return product;
   }
 
-  // async findProductByIdWithActiveCoupon(productId: number) {
-  //   const product = await prisma.product_coupon_applications.findFirst({
-  //     where: {
-  //       product_id: productId,
-  //       coupon: {
-  //         deleted_at: null,
-  //       },
-  //     },
-  //     include: {
-  //       product: true,
-  //     },
-  //   });
-
-  //   return { product };
-  // }
-
   async findProductByName(name: string) {
     const product = await prisma.product.findFirst({
       where: {
