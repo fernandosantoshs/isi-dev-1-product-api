@@ -6,10 +6,7 @@ import {
 import { prisma } from '@/lib/prisma';
 
 export class PrismaProductsRepository implements ProductsRepository {
-  async applyCouponToProduct(
-    productId: number,
-    couponId: number
-  ): Promise<Product_coupon_applications> {
+  async applyCouponToProduct(productId: number, couponId: number) {
     const coupon = await prisma.product_coupon_applications.create({
       data: {
         product_id: productId,
@@ -23,7 +20,7 @@ export class PrismaProductsRepository implements ProductsRepository {
   async removeCouponFromProduct(
     productId: number,
     data: Prisma.Product_coupon_applicationsUpdateInput
-  ): Promise<Product_coupon_applications> {
+  ) {
     const coupon = await prisma.product_coupon_applications.update({
       where: { id: productId },
       data,
@@ -97,7 +94,7 @@ export class PrismaProductsRepository implements ProductsRepository {
     return product;
   }
 
-  async create(data: Prisma.ProductCreateInput): Promise<Product> {
+  async create(data: Prisma.ProductCreateInput) {
     const product = await prisma.product.create({
       data,
     });
@@ -105,7 +102,7 @@ export class PrismaProductsRepository implements ProductsRepository {
     return product;
   }
 
-  updateProduct(id: number, data: Prisma.ProductUpdateInput): Promise<Product> {
+  updateProduct(id: number, data: Prisma.ProductUpdateInput) {
     const updatedProduct = prisma.product.update({
       where: { id },
       data,
@@ -114,7 +111,7 @@ export class PrismaProductsRepository implements ProductsRepository {
     return updatedProduct;
   }
 
-  async findManyProducts(filters: FetchProductsFilters): Promise<Product[]> {
+  async findManyProducts(filters: FetchProductsFilters) {
     const {
       page,
       limit,
@@ -162,6 +159,22 @@ export class PrismaProductsRepository implements ProductsRepository {
 
     const products = await prisma.product.findMany({
       where,
+      include: {
+        Product_coupon_applications: {
+          where: {
+            removed_at: null,
+            coupon: {
+              deleted_at: null,
+              valid_until: {
+                gte: new Date(),
+              },
+            },
+          },
+          include: {
+            coupon: true,
+          },
+        },
+      },
       orderBy,
       skip: page - 1,
       take: limit,
