@@ -1,6 +1,8 @@
 import { CouponsRepository } from '@/repositories/coupons-repository';
 import { normalizeString } from '@/utils/normalize-string';
 import { Coupon, CouponType } from '@prisma/client';
+import { CouponAlreadyExistsError } from '../errors/coupon-already-exists';
+import { DateOutOfPossibleRangeError } from '../errors/date-out-of-possible-range';
 
 interface CreateCouponUseCaseRequest {
   code: string;
@@ -35,16 +37,14 @@ export class CreateCouponUseCase {
       await this.couponsRepository.findCouponByCode(normalizedCode);
 
     if (couponAlreadyExists) {
-      throw new Error('Coupon already exists');
+      throw new CouponAlreadyExistsError();
     }
 
     const validFromPlus5Years = new Date(valid_from);
     validFromPlus5Years.setFullYear(validFromPlus5Years.getFullYear() + 5);
 
     if (valid_until > validFromPlus5Years) {
-      throw new Error(
-        'valid_until must be less than or equal to 5 years from valid_from'
-      );
+      throw new DateOutOfPossibleRangeError();
     }
 
     const coupon = await this.couponsRepository.create({
