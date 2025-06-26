@@ -1,5 +1,6 @@
 import { ProductsRepository } from '@/repositories/products-repository';
-import { Coupon, Product_coupon_applications } from '@prisma/client';
+import { Product_coupon_applications } from '@prisma/client';
+import { ResourceNotFoundError } from '../errors/resource-not-found';
 
 interface RemoveCouponUseCaseRequest {
   id: number;
@@ -14,14 +15,14 @@ export class RemoveCouponUseCase {
     const product = await this.productsRepository.findProductById(id);
 
     if (!product) {
-      throw new Error('Product not found');
+      throw new ResourceNotFoundError();
     }
 
     const activeCoupon =
       await this.productsRepository.findProducWithActiveCoupon(id);
 
     if (!activeCoupon) {
-      throw new Error('No active coupon in this product');
+      throw new ResourceNotFoundError();
     }
 
     const data = { removed_at: new Date() };

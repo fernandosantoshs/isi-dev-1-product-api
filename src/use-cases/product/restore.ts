@@ -1,5 +1,6 @@
 import { ProductsRepository } from '@/repositories/products-repository';
 import { Product } from '@prisma/client';
+import { ResourceNotFoundError } from '../errors/resource-not-found';
 
 interface RestoreProductUseCaseResponse {
   product: Product;
@@ -12,7 +13,7 @@ export class RestoreProductUseCase {
     const product = await this.productsRepository.restoreProduct(id);
 
     if (!product) {
-      throw new Error('Product not found');
+      throw new ResourceNotFoundError();
     }
 
     return { product };

@@ -1,5 +1,6 @@
 import { ProductsRepository } from '@/repositories/products-repository';
 import { Product } from '@prisma/client';
+import { ResourceNotFoundError } from '../errors/resource-not-found';
 
 interface PatchOps {
   op: 'replace';
@@ -26,7 +27,7 @@ export class UpdateProductUseCase {
     const product = await this.productsRepository.findProductById(id);
 
     if (!product) {
-      throw new Error('Product not found');
+      throw new ResourceNotFoundError();
     }
 
     let updatedData: Partial<Product> = { ...product, updated_at: new Date() };

@@ -5,6 +5,7 @@ import {
   ProductWithCoupons,
 } from '@/types/product-response';
 import { validateCoupon } from '@/utils/validate-coupon';
+import { ResourceNotFoundError } from '../errors/resource-not-found';
 
 export class GetProductUseCase {
   constructor(private productsRepository: ProductsRepository) {}
@@ -17,7 +18,7 @@ export class GetProductUseCase {
     )) as ProductWithCoupons;
 
     if (!productWithCoupon) {
-      throw new Error('Product not found');
+      throw new ResourceNotFoundError();
     }
 
     const normalizedProduct = validateCoupon(productWithCoupon);

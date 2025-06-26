@@ -3,6 +3,7 @@ import { ProductsRepository } from '@/repositories/products-repository';
 import { ProductWithCoupons } from '@/types/product-response';
 import { validateCoupon } from '@/utils/validate-coupon';
 import { Product_coupon_applications } from '@prisma/client';
+import { ResourceNotFoundError } from '../errors/resource-not-found';
 
 interface ApplyCouponUseCaseRequest {
   id: number;
@@ -28,7 +29,7 @@ export class ApplyCouponUseCase {
     )) as ProductWithCoupons;
 
     if (!productWithCoupon) {
-      throw new Error('Product not found');
+      throw new ResourceNotFoundError();
     }
 
     const checkForActiveCoupons = validateCoupon(productWithCoupon);
