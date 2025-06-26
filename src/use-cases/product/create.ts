@@ -1,7 +1,7 @@
 import { ProductsRepository } from '@/repositories/products-repository';
 import { normalizeString } from '@/utils/normalize-string';
 import { Product } from '@prisma/client';
-import { ProductAlreadyExists } from '../errors/product-already-exists';
+import { ProductAlreadyExistsError } from '../errors/product-already-exists';
 
 interface CreateProductUseCaseRequest {
   name: string;
@@ -29,7 +29,7 @@ export class CreateProductUseCase {
       await this.productsRepository.findProductByName(normalizedName);
 
     if (productAlreadyRegistered) {
-      throw new ProductAlreadyExists();
+      throw new ProductAlreadyExistsError();
     }
 
     const product = await this.productsRepository.create({

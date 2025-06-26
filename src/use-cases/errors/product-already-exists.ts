@@ -1,6 +1,6 @@
 import { AppError } from './app-errors';
 
-export class ProductAlreadyExists extends AppError {
+export class ProductAlreadyExistsError extends AppError {
   constructor() {
     super('Product already exists', 409);
   }
