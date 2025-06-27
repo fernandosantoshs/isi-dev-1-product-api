@@ -1,6 +1,7 @@
 import { CouponsRepository } from '@/repositories/coupons-repository';
 import { normalizeString } from '@/utils/normalize-string';
 import { Coupon } from '@prisma/client';
+import { ResourceNotFoundError } from '../errors/resource-not-found';
 
 interface DeleteCouponUseCaseResponse {
   coupon: Coupon;
@@ -15,7 +16,7 @@ export class DeleteCouponUseCase {
     const coupon = await this.couponsRepository.deleteCoupon(normalizedCode);
 
     if (!coupon) {
-      throw new Error('Coupon not found');
+      throw new ResourceNotFoundError();
     }
 
     return { coupon };

@@ -1,6 +1,7 @@
 import { CouponsRepository } from '@/repositories/coupons-repository';
 import { Coupon, CouponType, Prisma } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime/library';
+import { ResourceNotFoundError } from '../errors/resource-not-found';
 
 interface UpdateCouponUseCaseRequest {
   code: string;
@@ -43,7 +44,7 @@ export class UpdateCouponUseCase {
     const coupon = await this.couponsRepository.updateCoupon(code, updatedData);
 
     if (!coupon) {
-      throw new Error('Coupon not found');
+      throw new ResourceNotFoundError();
     }
 
     return coupon;
