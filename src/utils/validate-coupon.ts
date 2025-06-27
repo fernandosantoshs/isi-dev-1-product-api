@@ -1,5 +1,6 @@
 import { Product, Coupon } from '@prisma/client';
 import { calculateDiscount } from './calculate-product-discount';
+import { MinumumPriceWithCouponError } from '@/use-cases/errors/minimum-price-with-coupon';
 
 type ProductWithCoupons = Product & {
   Product_coupon_applications?: { coupon: Coupon }[];
@@ -25,9 +26,7 @@ export function validateCoupon(productWithCoupon: ProductWithCoupons) {
     });
 
     if (finalPrice < MIN_PRICE) {
-      throw new Error(
-        'Calculated price with discount cannot be less than 0.01'
-      );
+      throw new MinumumPriceWithCouponError();
     }
   }
 
