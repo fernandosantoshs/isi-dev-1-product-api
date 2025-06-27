@@ -6,6 +6,7 @@ import { Product_coupon_applications } from '@prisma/client';
 import { ResourceNotFoundError } from '../errors/resource-not-found';
 import { CouponAlreadyExistsError } from '../errors/coupon-already-exists';
 import { MismatchCouponTypeError } from '../errors/mismatch-coupon-type';
+import { MaxUsesReachedError } from '../errors/max-uses-reached';
 
 interface ApplyCouponUseCaseRequest {
   id: number;
@@ -45,11 +46,17 @@ export class ApplyCouponUseCase {
     if (coupon?.type !== type.toUpperCase()) {
       throw new MismatchCouponTypeError();
     }
+    // Verificar one shot e adds +1 uses count
+    if (coupon?.one_shot && coupon?.uses_count >= 1) {
+      throw new MaxUsesReachedError();
+    }
 
     const product = await this.productsRepository.applyCouponToProduct(
       productWithCoupon.id,
       coupon.id
     );
+
+    await this.productsRepository.incrementCouponUsesCount(coupon.id);
 
     return product;
   }

@@ -29,6 +29,7 @@ export interface ProductsRepository {
     id: number,
     couponId: number
   ): Promise<Product_coupon_applications>;
+  incrementCouponUsesCount(id: number): Promise<void>;
   removeCouponFromProduct(
     id: number,
     data: Prisma.Product_coupon_applicationsUpdateInput

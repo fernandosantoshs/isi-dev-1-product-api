@@ -11,6 +11,7 @@ export class PrismaProductsRepository implements ProductsRepository {
       data: {
         product_id: productId,
         coupon_id: couponId,
+        applied_at: new Date(),
       },
     });
 
@@ -26,6 +27,15 @@ export class PrismaProductsRepository implements ProductsRepository {
       data,
     });
     return coupon;
+  }
+
+  async incrementCouponUsesCount(couponId: number) {
+    await prisma.coupon.update({
+      where: { id: couponId },
+      data: {
+        uses_count: { increment: 1 },
+      },
+    });
   }
 
   restoreProduct(productId: number) {
