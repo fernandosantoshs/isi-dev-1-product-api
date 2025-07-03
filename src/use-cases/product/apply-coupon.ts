@@ -46,7 +46,7 @@ export class ApplyCouponUseCase {
     if (coupon?.type !== type.toUpperCase()) {
       throw new MismatchCouponTypeError();
     }
-    // Verificar one shot e adds +1 uses count
+
     if (coupon?.one_shot && coupon?.uses_count >= 1) {
       throw new MaxUsesReachedError();
     }
