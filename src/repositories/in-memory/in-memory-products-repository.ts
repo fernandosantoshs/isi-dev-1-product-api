@@ -30,7 +30,7 @@ export class InMemoryProductsRepository implements ProductsRepository {
   }
 
   async findProductByName(name: string) {
-    const product = this.items.find((item) => item.name === name);
+    const product = this.items.find((item) => item.normalized_name === name);
 
     return product ?? null;
   }
