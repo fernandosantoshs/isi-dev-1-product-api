@@ -36,8 +36,23 @@ describe('Create Product Use Case', () => {
 
     await useCase.execute(data);
 
-    expect(async () => {
+    await expect(async () => {
       await useCase.execute(data);
     }).rejects.toBeInstanceOf(ProductAlreadyExistsError);
+  });
+
+  it('should not be able to create a product with price equal or lower than 0.01', async () => {
+    const data = {
+      name: 'Oreo',
+      description: 'Baunilha 80g',
+      price: 0.01,
+      stock: 300,
+    };
+
+    await useCase.execute(data);
+
+    await expect(async () => {
+      await useCase.execute(data);
+    }).rejects.toBeInstanceOf(Error);
   });
 });
