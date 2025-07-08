@@ -35,8 +35,14 @@ export class InMemoryProductsRepository implements ProductsRepository {
     return product ?? null;
   }
 
-  findProductById(id: number): Promise<Product | null> {
-    throw new Error('Method not implemented.');
+  async findProductById(id: number): Promise<Product | null> {
+    const product = this.items.find((item) => item.id === id);
+
+    if (!product) {
+      return null;
+    }
+
+    return product;
   }
 
   findProducWithActiveCoupon(
